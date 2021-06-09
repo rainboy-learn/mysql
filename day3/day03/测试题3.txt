@@ -1,0 +1,104 @@
+一、查询员工姓名、入职日期并按入职日期升序
+
+select last_name,hiredate
+from employees
+order by hiredate asc;
+
+
+
+date_formate(hiredate,'%Y')
+
+year(hiredate)
+month(hiredate)
+day(hiredate)
+hour(hiredate)
+minute(hiredate)
+second(hiredate)
+
+
+
+二、将当前日期显示成 xxxx年xx月xx日
+
+
+select date_format(now(),'%Y年%m月%d日');
+
+
+三、
+已知学员信息表stuinfo
+	stuId
+	stuName 
+	gender 
+	majorId
+
+已知专业表major
+	id	
+	majorName
+已知成绩表result
+	id成绩编号
+	majorid
+	stuid
+	score
+
+
+1、查询所有男生的姓名、专业名和成绩，使用SQL92和SQL99两种语法方式实现
+
+
+SQL92
+
+select stuname,majorname,score
+from stuinfo s,major m,result r
+where s.majorid = m.id and r.stuid = s.stuid
+and s.gender = '男';
+
+
+
+SQL99
+
+select stuname,majorname,score
+from stuinfo s
+
+join major m on s.majorid = m.id 
+join result r on r.stuid = s.stuid
+where s.gender = '男';
+
+
+
+
+
+
+
+
+2、查询每个性别的每个专业的平均成绩，并按平均成绩降序
+
+
+
+select avg(score) 平均成绩,gendeer,s.majorid
+from stuinfo s
+join result r on s.stuid = r.stuid
+group by gender,s.majorid
+order by 平均成绩 desc;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

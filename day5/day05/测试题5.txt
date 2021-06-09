@@ -1,0 +1,92 @@
+1、使用sql语句，修改员工表中编号是100-200之间的员工的邮箱为：xx@atguigu.com
+
+
+update employees set email = 'xx@atguigu.com'
+ where employee_id between 100 and 200;
+
+
+2、使用sql语句，删除邮箱为空的员工信息
+
+delete from employees
+where email is null;
+
+
+3、使用sql语句，在beauty表中插入一行数据
+
+beauty
+	bid int
+	bname varchar(20)
+	borndate datetime
+	bgender char
+
+insert into beauty values(1,'慕容复','1990-1-1','男');
+
+
+4、使用PreparedStatement实现查询beauty表中的生日晚于1998年的女神信息
+
+user=root
+password=root
+url=jdbc:mysql://localhost:3306/库名
+driver=com.mysql.jdbc.Driver
+
+
+Properties info = new Properties();
+info.load("src\\jdbc.properties");
+
+String user = info.getProperty("user");
+String password= info.getProperty("password");
+String url = info.getProperty("url");
+String driver = info.getProperty("driver");
+
+
+//步骤1：注册驱动
+Class.forName(driver);
+
+//步骤2：获取连接
+
+Connection connection = DriverManager.getConnection(url,user,password);
+
+//步骤3：执行查询
+
+String sql = "select * from beauty where year(borndate)>1998";
+
+PreparedStatement ps = connection.prepareStatement(sql);
+
+ResultSet set = ps.executeQuery();
+
+while(set.next()){
+
+	int id = set.getInt("bid");
+	String name = set.getString("bname");
+	Date borndate = set.getDate("borndate");
+	char gender = set.getString("bgender").charAt(0);
+	System.out.println(id+"\t"+name+"\t"+borndate+"\t"+gender);
+}
+
+
+//步骤4：关闭
+set.close();
+ps.close();
+connection.close();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

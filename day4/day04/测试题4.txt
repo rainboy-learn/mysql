@@ -1,0 +1,93 @@
+1.使用分页查询实现，查询员工信息表中部门为50号的工资最低的5名员工信息
+select *
+from employees
+where deparrment_id = 50
+order by salary asc
+limit 0,5;
+
+
+
+2.使用子查询实现城市为Toroto的，且工资>10000的员工姓名
+
+#①查询城市为Toroto的部门编号
+
+select department_id
+from departments d
+join locations l on d.location_id = l.location_id
+where city = 'Toroto'
+
+#②查询部门号在①里面的员工姓名
+select last_name
+from employees
+where salary>10000 and department_id in(
+
+	select department_id
+	from departments d
+	join locations l on d.location_id = l.location_id
+	where city = 'Toroto'
+
+);
+
+
+
+
+
+
+3.创建表qqinfo，里面包含qqid，添加主键约束、昵称nickname，添加唯一约束、邮箱email（添加非空约束）、性别gender
+
+
+create table if not exists qqinfo(
+	qqid int primary key,
+	nickname varchar(20) unique,
+	email varchar(20) not null,
+	gender char
+);
+
+4.删除表qqinfo
+
+drop table if exists qqinfo;
+
+5.试写出sql查询语句的定义顺序和执行顺序
+
+1》定义顺序（书写顺序）
+select distinct  查询列表
+from 表名 别名
+join 表名 别名 
+on 连接条件
+where 筛选条件
+group by 分组列表
+having 分组后筛选
+order by 排序列表
+limit 条目数;
+
+
+2》执行顺序
+
+from子句
+join子句
+on子句
+where子句
+group by子句
+having子句
+select 子句
+order by子句
+limit子句
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
